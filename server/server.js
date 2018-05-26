@@ -53,7 +53,7 @@ app.delete('/todos/:id', (req, res) => {
         if (todo) {
             return res.send({ todo });
         }
-        return res.status(400).send({ error: 'No TODO with that ID.' });
+        return res.status(404).send({ error: 'No TODO with that ID.' });
     });
 });
 
