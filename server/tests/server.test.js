@@ -14,6 +14,7 @@ describe('POST /todos', () => {
         const text = 'Test todo text';
         request(app)
             .post('/todos')
+            .set('x-auth', users[0].tokens[0].token)
             .send({ text })
             .expect(200)
             .expect((res) => {
@@ -33,6 +34,7 @@ describe('POST /todos', () => {
     it('should not create todo', (done) => {
         request(app)
             .post('/todos')
+            .set('x-auth', users[0].tokens[0].token)
             .expect(400)
             .end((err, res) => {
                 if (err) {
@@ -50,9 +52,10 @@ describe('GET /todos', () => {
     it('should get all todos', (done) => {
         request(app)
             .get('/todos')
+            .set('x-auth', users[0].tokens[0].token)
             .expect(200)
             .expect((res) => {
-                expect(res.body.todos.length).toBe(2);
+                expect(res.body.todos.length).toBe(1);
             })
             .end(done);
     });
@@ -62,6 +65,7 @@ describe('GET /todos/:id', () => {
     it('should get a todo', (done) => {
         request(app)
             .get('/todos/' + todos[0]._id)
+            .set('x-auth', users[0].tokens[0].token)
             .expect(200)
             .expect((res) => {
                 expect(res.body.todo.text).toBe(todos[0].text);
@@ -72,6 +76,7 @@ describe('GET /todos/:id', () => {
     it('should get a 404 when ID is invalid', (done) => {
         request(app)
             .get('/todos/000')
+            .set('x-auth', users[0].tokens[0].token)
             .expect(404)
             .end(done);
     });
@@ -79,6 +84,7 @@ describe('GET /todos/:id', () => {
     it('should get a 404 when no user exists with that ID', (done) => {
         request(app)
             .get('/todos/' + new ObjectID())
+            .set('x-auth', users[0].tokens[0].token)
             .expect(404)
             .end(done);
     });
