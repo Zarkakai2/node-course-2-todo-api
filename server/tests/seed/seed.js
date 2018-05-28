@@ -42,7 +42,7 @@ const populateUsers = (done) => {
             const userTwo = new User(users[1]).save();
             return Promise.all([userOne, userTwo]);
         })
-        .then(() => done());;
+        .then(() => done());
 };
 
 module.exports = { populateTodos, todos, populateUsers, users };
